@@ -13,7 +13,7 @@ tags:
     - Kubernetes
 hidden: false
 comments: true
-draft: true
+draft: false
 ---
 
 <audio id="audio" title="01 | etcd的前世今生：为什么Kubernetes使用etcd？" controls="" preload="none"><source id="mp3" src="https://static001.geekbang.org/resource/audio/yy/36/yy3d617dbf6yycfeb065064193785436.mp3"></audio>
