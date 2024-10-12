@@ -1,7 +1,7 @@
 ---
-title: Markdown Syntax Guide
+title: 一份简单的MarkDown入门教程
 date: 2023-09-07
-description: Sample article showcasing basic Markdown syntax and formatting for HTML elements.
+description: 示例展示了 HTML 元素的基本 Markdown 语法和格式.
 tags: 
     - markdown
     - css
