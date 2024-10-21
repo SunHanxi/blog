@@ -31,7 +31,7 @@ useradd bringwater
 # 安装 Noto 字体	
 pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji	
 # 桌面环境
-pacman -s	gnome gnome-tweaks	
+pacman -S gnome gnome-tweaks	
 systemctl enable --now gdm
 ```
 
