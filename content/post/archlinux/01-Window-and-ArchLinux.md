@@ -9,3 +9,16 @@ hidden: false
 comments: true
 draft: false
 ---
+
+## 1 安装
+
+- ventory制作启动盘
+- archinstall安装
+    - 选择一个单独的硬盘，自动分区，不区分home目录。
+    - copy iso网络配置
+- 完成
+
+
+
+## 2 配置
+
