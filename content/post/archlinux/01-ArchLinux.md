@@ -42,3 +42,13 @@ sudo pacman -S fcitx5-im
 sudo pacman -S fcitx5-chinese-addons  fcitx5-rime
 ```
 
+### 2.3 安装开发环境
+
+安装软件的列表：
+- JetBrains Toolbox App
+- QQ
+- Chrome
+
+```bash
+yay -S 
+```
