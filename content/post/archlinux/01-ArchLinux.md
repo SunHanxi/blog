@@ -52,3 +52,14 @@ sudo pacman -S fcitx5-chinese-addons  fcitx5-rime
 ```bash
 yay -S 
 ```
+
+### 2.4 配置v2raya
+
+```bash
+# 安装
+sudo pacman -S v2raya v2ray
+
+# 启动
+sudo systemctl enable v2raya
+```
+
