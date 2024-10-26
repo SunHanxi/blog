@@ -63,3 +63,35 @@ sudo pacman -S v2raya v2ray
 sudo systemctl enable v2raya
 ```
 
+### 2.5 声卡
+
+```bash
+
+sudo pacman -S pavucontrol alsa-utils alsa-plugins pulseaudio-alsa pavucontrol-qt
+
+# 禁用声卡省电模式
+
+echo 0 > /sys/module/snd_hda_intel/parameters/power_save
+
+sudo cat > /etc/modprobe.d/audio_disable_powersave.conf <<EOF
+options snd_hda_intel power_save=0
+
+EOF
+```
+
+### 2.6 配置git
+
+```bash
+yay git vscode
+git config --global user.name ***
+git config --global user.email ***
+```
+
+
+### 2.7 美化桌面
+
+```bash
+yay -S chrome-gnome-shell
+
+
+```
