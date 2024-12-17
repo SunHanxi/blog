@@ -1,5 +1,5 @@
 ---
-title: "Wsl2配置"
+title: "WSL2配置"
 description: 
 date: 2024-12-17T14:47:47+08:00
 image: 
