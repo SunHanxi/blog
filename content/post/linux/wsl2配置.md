@@ -11,3 +11,5 @@ draft: false
 ---
 
 **不折腾ArchLinux了**
+
+**WSL2真香**
