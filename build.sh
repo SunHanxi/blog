@@ -10,7 +10,6 @@
 #      本仓库没有任何 draft:true 的文章,故去掉 -D 不影响结果,语义更清晰。
 #      若以后确实需要发布草稿,把下方 `hugo --minify` 改回 `hugo -D --minify` 即可。
 
-set -euo pipefail
 
 cd "$(dirname "$0")"
 
