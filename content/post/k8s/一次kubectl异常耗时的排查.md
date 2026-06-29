@@ -1,10 +1,10 @@
 ---
 title: "一次 kubectl 异常耗时的排查"
 description: "kubectl get pod 卡顿 6 秒，真正的根因不在 apiserver，而在 API Discovery 阶段的 custom metrics 高基数 metric。"
-date: 2024-09-01T00:00:00+08:00
+date: 2026-06-29T00:00:00+08:00
 image: 
 categories:
-    - Linux
+    - Kubernetes
 tags:
     - Kubernetes
     - 故障排查
