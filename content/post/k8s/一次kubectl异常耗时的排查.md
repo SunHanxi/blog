@@ -1,4 +1,18 @@
-# Kubernetes 故障排查案例：kubectl get pod 卡顿 6 秒
+---
+title: "一次 kubectl 异常耗时的排查"
+description: "kubectl get pod 卡顿 6 秒，真正的根因不在 apiserver，而在 API Discovery 阶段的 custom metrics 高基数 metric。"
+date: 2024-09-01T00:00:00+08:00
+image: 
+categories:
+    - Linux
+tags:
+    - Kubernetes
+    - 故障排查
+license: 
+hidden: false
+comments: true
+draft: false
+---
 
 ## 问题现象
 
@@ -34,7 +48,7 @@ kubectl get pod -v=9
 
 ---
 
-# 环境信息
+## 环境信息
 
 ```text
 Client Version: v1.17.5
@@ -50,7 +64,7 @@ Server Version: v1.24.2
 
 ---
 
-# 初步怀疑
+## 初步怀疑
 
 最初怀疑包括：
 
@@ -62,7 +76,7 @@ Server Version: v1.24.2
 
 ---
 
-# 验证 apiserver
+## 验证 apiserver
 
 开启调试：
 
@@ -88,7 +102,7 @@ GET /api/v1/pods
 
 ---
 
-# 验证 discovery
+## 验证 discovery
 
 执行：
 
@@ -108,7 +122,7 @@ real    0m6.137s
 
 ---
 
-# 检查 kubectl 缓存
+## 检查 kubectl 缓存
 
 查看缓存目录：
 
@@ -141,7 +155,7 @@ du -sh ~/.kube/cache/discovery/*/*/*
 
 ---
 
-# 定位 custom metrics
+## 定位 custom metrics
 
 查看资源数量：
 
@@ -175,7 +189,7 @@ kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1 \
 
 ---
 
-# 查看具体 metric
+## 查看具体 metric
 
 执行：
 
@@ -209,7 +223,7 @@ metric 中包含：
 
 ---
 
-# 根因分析
+## 根因分析
 
 Alluxio 导出的 metric 存在极高基数。
 
@@ -254,7 +268,7 @@ kubectl 解析耗时 6 秒
 
 ---
 
-# 为什么 kubectl get pod 会受影响
+## 为什么 kubectl get pod 会受影响
 
 kubectl 启动时需要执行 Discovery：
 
@@ -300,7 +314,7 @@ Discovery：5~6秒
 
 ---
 
-# 修复过程
+## 修复过程
 
 发现 Alluxio 已经下线。
 
@@ -337,7 +351,7 @@ kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1 \
 
 ---
 
-# 清理客户端缓存
+## 清理客户端缓存
 
 ```bash
 rm -rf ~/.kube/cache
@@ -346,7 +360,7 @@ rm -rf ~/.kube/http-cache
 
 ---
 
-# 修复结果
+## 修复结果
 
 测试：
 
@@ -364,9 +378,9 @@ time kubectl get pod
 
 ---
 
-# 排查流程总结
+## 排查流程总结
 
-## 1. 判断是否是 apiserver
+### 1. 判断是否是 apiserver
 
 ```bash
 kubectl get pod -v=9
@@ -376,7 +390,7 @@ kubectl get pod -v=9
 
 ---
 
-## 2. 判断是否是 discovery
+### 2. 判断是否是 discovery
 
 ```bash
 time kubectl api-resources
@@ -384,7 +398,7 @@ time kubectl api-resources
 
 ---
 
-## 3. 查看 discovery cache
+### 3. 查看 discovery cache
 
 ```bash
 du -sh ~/.kube/cache
@@ -392,7 +406,7 @@ du -sh ~/.kube/cache
 
 ---
 
-## 4. 找超大资源文件
+### 4. 找超大资源文件
 
 ```bash
 du -sh ~/.kube/cache/discovery/*/*/*
@@ -400,7 +414,7 @@ du -sh ~/.kube/cache/discovery/*/*/*
 
 ---
 
-## 5. 检查 custom metrics 数量
+### 5. 检查 custom metrics 数量
 
 ```bash
 kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1 \
@@ -409,7 +423,7 @@ kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1 \
 
 ---
 
-# 经验总结
+## 经验总结
 
 如果出现：
 
@@ -445,7 +459,7 @@ kubectl discovery 变慢
 
 ---
 
-# 最终根因
+## 最终根因
 
 ```text
 Alluxio 高基数 metric
